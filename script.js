@@ -13,7 +13,6 @@ fetch(urll)
 
 })
 }
-
 // "id": 1,
 // "image": "https://i.ibb.co.com/cSQdg7tf/mango-min.jpg",
 // "name": "Mango Tree",
@@ -67,7 +66,6 @@ const loadAllTrees = () => {
     }
  
 loadAllTrees();
-
 const loadTrees=(id)=>{
     // console.log("Trees",id);
     const url = `https://openapi.programming-hero.com/api/category/${id}`
@@ -84,14 +82,6 @@ const showAllTrees = (plants) =>{
              `
      });
 }
-
-// "id": 1,
-// "image": "https://i.ibb.co.com/cSQdg7tf/mango-min.jpg",
-// "name": "Mango Tree",
-// "description": "A fast-growing tropical tree that produces delicious, juicy mangoes during summer. Its dense green canopy offers shade, while its sweet fruits are rich in vitamins and minerals.",
-// "category": "Fruit Tree",
-// "price": 500
-
 const displayTrees = (plants) => {
   const plantsContainer = document.getElementById("plants-container");
   plantsContainer.innerHTML=""
@@ -101,23 +91,20 @@ const displayTrees = (plants) => {
     <div onclick="loadDetails(${plant.id})" class="bg-white p-2 h-[390px] w-[295px]  " >
            
               <img class="w-[290px] h-[186px] pt-2 " src="${plant.image}" alt="">
-              <h4 class="font-bold pt-2">${plant.name}</h4>
+              <h4 class="font-bold pt-2 plant-tittle">${plant.name}</h4>
               <p class="text-sm text-gray-500">${plant.description}</p>
               <div class="flex justify-between pt-1">
                 <p class="bg-[#DCFCE7] px-2 py-1 text-sm rounded-2xl text-green-800">${plant.category}</p>
-                <p class="font-bold pt-2">${plant.price}</p>
+                <p class="plant-price font-bold pt-2">${plant.price}</p>
               </div>
               <div class="pt-3 pb-3">
-                <button class=" bg-green-800 pt-2  text-white px-24 pb-1 rounded-full ">Add to Cart</button>
+                <button onclick="addToCart(this)" class=" bg-green-800 pt-2  text-white px-24 pb-1 rounded-full ">Add to Cart</button>
               </div></div>
     `
     plantsContainer.append(plantCard)
   })
     
 }
-
-
-
 
 const showCategory = (categories) => {
           categories.forEach(cat => {
@@ -138,3 +125,63 @@ const showCategory = (categories) => {
            
    
 }
+
+// document.getElementById("plants-container").addEventListener('click' ,(e) => {
+//   console.log(e.target)
+// })
+
+let cart = []
+
+
+const addToCart = (btn,event) =>{
+  // event.stopImmediatePropagation();
+  // console.log("clicked",btn)
+  const card = btn.parentNode.parentNode 
+  const plantTittle = card.querySelector(".plant-tittle").innerText ;
+  const plantPrice = card.querySelector(".plant-price").innerText ;
+  const plantPriceNum = Number(plantPrice)
+
+  console.log(plantTittle,plantPriceNum)
+
+  const selectedItem = {
+    plantTittle : plantTittle, 
+    plantPrice : plantPriceNum,
+  };
+  cart.push(selectedItem);
+  displayCart(cart);
+}
+  //cart-card
+
+ const  displayCart = (cart) =>{
+    const cartContainer = document.getElementById("cart-container");
+    cartContainer.innerHTML=""
+for(let item of cart){
+  const newItem = document.createElement("div")
+  newItem.innerHTML = `
+  <div  class= "bg-[#F0FDF4] m-3 flex justify-between p-5">
+            <div>
+               <h2 class="font-bold text-[16px] plant-tittle">${item.plantTittle}</h2>
+            <p class="plant-price">${item.plantPrice} x 1</p>
+            </div>
+           <div onclick="removeCart(this)">
+            <i class="fa-solid fa-xmark"></i>
+
+           </div>
+          </div>
+  `
+  cartContainer.append(newItem)
+}
+  }
+   
+const removeCart = (btn) => {
+  const item = btn.parentNode;
+  const plantTittle = item.querySelector(".plant-tittle").innerText
+  const plantPrice = item.querySelector(".plant-price").innerText
+
+  cart = cart.filter((item)=> item.plantTittle != plantTittle);
+  displayCart(cart)
+}
+
+
+
+
