@@ -53,19 +53,19 @@ const loadCategories = () => {
     }
  
 loadCategories();
-const loadAllTrees = () => {
-    fetch("https://openapi.programming-hero.com/api/plants")
-    .then((res) => res.json())
-    .then((data) => {
-        // console.log(data.categories);
-        const plants = data.plants;
-        console.log(plants);
-        // console.log(categories)
-            showAllTrees(plants);     
-        });
-    }
+// const loadAllTrees = () => {
+//     fetch("https://openapi.programming-hero.com/api/plants")
+//     .then((res) => res.json())
+//     .then((data) => {
+//         // console.log(data.categories);
+//         const plants = data.data;
+//         console.log(plants);
+//         // console.log(categories)
+//             showAllTrees(plants);     
+//         });
+//     }
  
-loadAllTrees();
+// loadAllTrees();
 const loadTrees=(id)=>{
     // console.log("Trees",id);
     const url = `https://openapi.programming-hero.com/api/category/${id}`
@@ -76,12 +76,12 @@ const loadTrees=(id)=>{
         displayTrees(data.plants) 
         });
 }
-const showAllTrees = (plants) =>{
-     categories.forEach(cat => {
-              allTrees.innerHTML += `<li onclick="loadTrees()"  class="pt-2 hover:bg-green-800 hover:text-white"> <a href="">All Trees</a> </li>
-             `
-     });
-}
+// const showAllTrees = (plants) =>{
+//      categories.forEach(cat => {
+//               allTrees.innerHTML += `<li onclick="loadTrees()"  class="pt-2 hover:bg-green-800 hover:text-white"> <a href="">All Trees</a> </li>
+//              `
+//      });
+// }
 const displayTrees = (plants) => {
   const plantsContainer = document.getElementById("plants-container");
   plantsContainer.innerHTML=""
@@ -111,6 +111,23 @@ const showCategory = (categories) => {
                categoryContainer.innerHTML += `
              <li onclick="loadTrees(${cat.id})" id="${cat.id}" class="pt-2 hover:bg-green-800 hover:text-white">${cat.category_name} </li>`
      });
+
+
+// const showCategory = (categories) => {
+//   const categoryContainer = document.getElementById("categoryContainer")
+//   categoryContainer.innerHTML = ""
+//   categories.forEach((cate)=>{
+//     // const allTree = document.createElement("li")
+//     // allTree.innerHTML=`
+//     // <p id="allTrees" class="pt-2 hover:bg-green-800 hover:text-white">    <a href="">All Trees</a> </p>
+//     // `
+//     // const li = document.createElement("li")
+//     // li.className = "pt-2 hover:bg-green-800 hover:text-white"
+//     // li.innerHTML = `<a href="#">All trees</a>`
+
+//     categoryContainer.append(li)
+//   })
+// }
 
              categoryContainer.addEventListener('click' , (e) =>{
                 const allLi = document.querySelectorAll('li')
