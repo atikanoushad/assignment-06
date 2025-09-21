@@ -97,17 +97,17 @@ const displayTrees = (plants) => {
   plants.forEach((plant)=>{
     const plantCard = document.createElement("div")
     plantCard.innerHTML=`
-    <div  class="bg-white p-2 h-[390px] w-[295px]  " >
+    <div  class="bg-white p-3 rounded-2xl shadow-md w-full mx-auto sm:w-[295px]  h-[390px] max-w-[295px]  " >
            
-              <img class="w-[290px] h-[186px] pt-2 " src="${plant.image}" alt="">
-              <h4 onclick="loadDetails(${plant.id})" class="font-bold pt-2 plant-tittle">${plant.name}</h4>
+              <img class="w-full  h-[180px] pt-2 " src="${plant.image}" alt="">
+              <h4 onclick="loadDetails(${plant.id})" class="font-bold pt-2 sm:text-lg plant-tittle">${plant.name}</h4>
               <p class="text-sm text-gray-500">${plant.description}</p>
-              <div class="flex justify-between pt-1">
-                <p class="bg-[#DCFCE7] px-2 py-1 text-sm rounded-2xl text-green-800">${plant.category}</p>
-                <p class="plant-price font-bold pt-2">${plant.price}</p>
+              <div class="flex justify-between flex-wrap items-center pt-2">
+                <p class="bg-[#DCFCE7] px-2 py-1 text-xs sm:text-sm rounded-2xl text-green-800">${plant.category}</p>
+                <p class="plant-price font-bold pt-2 text-sm sm:text-base">${plant.price}</p>
               </div>
               <div class="pt-3 pb-3">
-                <button onclick="addToCart(this)" class=" bg-green-800 pt-2  text-white px-24 pb-1 rounded-full ">Add to Cart</button>
+                <button onclick="addToCart(this)" class=" bg-green-800 pt-2  text-white px-24 pb-1 rounded-full text-sm sm:text-base ">Add to Cart</button>
               </div></div>
     `
     plantsContainer.append(plantCard)
@@ -203,6 +203,8 @@ for(let item of cart){
 
            </div>
           </div>
+           
+          </div>
   `
   cartContainer.append(newItem)
 }
@@ -212,6 +214,7 @@ const removeCart = (btn) => {
   const item = btn.parentNode;
   const plantTittle = item.querySelector(".plant-tittle").innerText
   const plantPrice = item.querySelector(".plant-price").innerText
+ 
 
   cart = cart.filter((item)=> item.plantTittle != plantTittle);
   displayCart(cart)
