@@ -2,6 +2,18 @@
 const categoryContainer = document.getElementById('categoryContainer');
 const allTrees = document.getElementById('allTrees')
 
+// spinner
+// const manageSpinner = (status) => {
+//   if(status == true ){
+//     document.getElementById("spinner").classList.remove("hiddenn");
+//     document.getElementById("plants-container").classList.add("hidden")
+//   }
+//   else{
+//     document.getElementById("plants-container").classList.remove("hiddenn");
+//     document.getElementById("spinner").classList.add("hiddenn")
+//   }
+// }
+
 const loadDetails =(id)=>{
 //    console.log("details")
 const urll = `https://openapi.programming-hero.com/api/plant/${id}`
@@ -67,6 +79,7 @@ loadCategories();
  
 // loadAllTrees();
 const loadTrees=(id)=>{
+  // manageSpinner(true)
     // console.log("Trees",id);
     const url = `https://openapi.programming-hero.com/api/category/${id}`
     // console.log(url)
@@ -75,23 +88,19 @@ const loadTrees=(id)=>{
     .then((data) => {
         displayTrees(data.plants) 
         });
+      
 }
-// const showAllTrees = (plants) =>{
-//      categories.forEach(cat => {
-//               allTrees.innerHTML += `<li onclick="loadTrees()"  class="pt-2 hover:bg-green-800 hover:text-white"> <a href="">All Trees</a> </li>
-//              `
-//      });
-// }
+
 const displayTrees = (plants) => {
   const plantsContainer = document.getElementById("plants-container");
   plantsContainer.innerHTML=""
   plants.forEach((plant)=>{
     const plantCard = document.createElement("div")
     plantCard.innerHTML=`
-    <div onclick="loadDetails(${plant.id})" class="bg-white p-2 h-[390px] w-[295px]  " >
+    <div  class="bg-white p-2 h-[390px] w-[295px]  " >
            
               <img class="w-[290px] h-[186px] pt-2 " src="${plant.image}" alt="">
-              <h4 class="font-bold pt-2 plant-tittle">${plant.name}</h4>
+              <h4 onclick="loadDetails(${plant.id})" class="font-bold pt-2 plant-tittle">${plant.name}</h4>
               <p class="text-sm text-gray-500">${plant.description}</p>
               <div class="flex justify-between pt-1">
                 <p class="bg-[#DCFCE7] px-2 py-1 text-sm rounded-2xl text-green-800">${plant.category}</p>
@@ -102,7 +111,9 @@ const displayTrees = (plants) => {
               </div></div>
     `
     plantsContainer.append(plantCard)
+      
   })
+// manageSpinner(false)
     
 }
 
@@ -148,6 +159,7 @@ const showCategory = (categories) => {
 // })
 
 let cart = []
+let total = 0
 
 
 const addToCart = (btn,event) =>{
@@ -165,9 +177,15 @@ const addToCart = (btn,event) =>{
     plantPrice : plantPriceNum,
   };
   cart.push(selectedItem);
+  total = total + plantPriceNum
   displayCart(cart);
+  displayTotal(total)
 }
   //cart-card
+   const displayTotal=(val)=>{
+    document.getElementById("cart-total").innerHTML = val ;
+
+   }
 
  const  displayCart = (cart) =>{
     const cartContainer = document.getElementById("cart-container");
@@ -202,3 +220,9 @@ const removeCart = (btn) => {
 
 
 
+// const showAllTrees = (plants) =>{
+//      categories.forEach(cat => {
+//               allTrees.innerHTML += `<li onclick="loadTrees()"  class="pt-2 hover:bg-green-800 hover:text-white"> <a href="">All Trees</a> </li>
+//              `
+//      });
+// }
